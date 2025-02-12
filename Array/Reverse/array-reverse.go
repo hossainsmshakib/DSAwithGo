@@ -1,3 +1,6 @@
+// Time - O(N)
+// Space - O(N)
+
 package main
 
 import "fmt"
@@ -16,7 +19,7 @@ func reverse(arr []int, left int, right int) {
 func main() {
 	arr := []int{1, 2, 3, 4, 5, 6, 7}
 	fmt.Println("Original Array: ", arr)
-	
+
 	// passing the array and left, right position
 	reverse(arr, 0, len(arr) - 1)
 	fmt.Println("Reversed Array: ", arr)
