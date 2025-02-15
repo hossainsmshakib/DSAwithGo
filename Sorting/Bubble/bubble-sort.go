@@ -1,3 +1,8 @@
+/*
+Sorting Algorithm	Time Complexity (Best, Avg, Worst)	Space Complexity	Stability	Use Case
+Bubble Sort				O(n), O(n²), O(n²)						O(1)			Avoid, too slow
+*/
+
 package main
 
 import "fmt"
