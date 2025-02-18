@@ -151,6 +151,7 @@ func max(a, b int) int {
 func main() {
 	var treeRoot *TreeNode
 
+	// Insert elements
 	treeRoot = insertNode(treeRoot, 5)
 	treeRoot = insertNode(treeRoot, 3)
 	treeRoot = insertNode(treeRoot, 7)
@@ -158,4 +159,23 @@ func main() {
 	treeRoot = insertNode(treeRoot, 4)
 	treeRoot = insertNode(treeRoot, 6)
 	treeRoot = insertNode(treeRoot, 8)
+
+	fmt.Println("Preorder Traversal:")
+	preorderTraversal(treeRoot) // Output: 5 3 2 4 7 6 8
+	fmt.Println("\nInorder Traversal:")
+	inorderTraversal(treeRoot) // Output: 2 3 4 5 6 7 8
+	fmt.Println("\nPostorder Traversal:")
+	postorderTraversal(treeRoot) // Output: 2 4 3 6 8 7 5
+
+	fmt.Println("\nHeight of Tree:", calculateTreeHeight(treeRoot)) // Output: 3
+
+	// Search
+	fmt.Println("\nSearch for 4:", searchNode(treeRoot, 4)) // Output: true
+	fmt.Println("Search for 10:", searchNode(treeRoot, 10)) // Output: false
+
+	// Delete node
+	treeRoot = deleteNode(treeRoot, 7)
+	fmt.Println("\nInorder Traversal After Deletion:")
+	inorderTraversal(treeRoot) // Output: 2 3 4 5 6 8
+	fmt.Println()
 }
