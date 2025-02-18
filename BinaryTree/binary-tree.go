@@ -7,6 +7,8 @@ type TreeNode struct {
 }
 
 func insertNode(root *TreeNode, newValue int) *TreeNode {
+
+	// Create a new node if the tree is empty
 	if root == nil {
 		return &TreeNode{value: newValue}
 	}
@@ -28,5 +30,5 @@ func main() {
 	treeRoot = insertNode(treeRoot, 2)
 	treeRoot = insertNode(treeRoot, 4)
 	treeRoot = insertNode(treeRoot, 6)
-	// treeRoot = insertNode(treeRoot, 8)
+	treeRoot = insertNode(treeRoot, 8)
 }
