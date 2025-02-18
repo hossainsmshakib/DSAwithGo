@@ -28,5 +28,5 @@ func main() {
 	treeRoot = insertNode(treeRoot, 2)
 	treeRoot = insertNode(treeRoot, 4)
 	treeRoot = insertNode(treeRoot, 6)
-	treeRoot = insertNode(treeRoot, 8)
+	// treeRoot = insertNode(treeRoot, 8)
 }
