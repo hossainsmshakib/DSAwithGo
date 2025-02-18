@@ -8,13 +8,17 @@ type TreeNode struct {
 	right *TreeNode
 }
 
-func insertNode(root *TreeNode, newValue int) *TreeNode {
+// Store the diameter path
+var diameterPath []int
 
+// Insert a new node into the Binary Search Tree
+func insertNode(root *TreeNode, newValue int) *TreeNode {
 	// Create a new node if the tree is empty
 	if root == nil {
 		return &TreeNode{value: newValue}
 	}
 
+	// Insert in the left or right subtree based on value
 	if newValue < root.value {
 		root.left = insertNode(root.left, newValue)
 	} else {
@@ -23,15 +27,18 @@ func insertNode(root *TreeNode, newValue int) *TreeNode {
 	return root
 }
 
+// Search for a node in the Binary Search Tree
 func searchNode(root *TreeNode, targetValue int) bool {
 	if root == nil {
 		return false
 	}
 
+	// If found, return true
 	if root.value == targetValue {
 		return true
 	}
 
+	// Recur to left or right subtree
 	if targetValue < root.value {
 		return searchNode(root.left, targetValue)
 	} else {
@@ -39,32 +46,34 @@ func searchNode(root *TreeNode, targetValue int) bool {
 	}
 }
 
+// Delete a node from the Binary Search Tree
 func deleteNode(root *TreeNode, targetValue int) *TreeNode {
-
-	// tree is empty
+	// If tree is empty
 	if root == nil {
 		return nil
 	}
-	// find the node to del
+
+	// Find the node to delete
 	if targetValue < root.value {
 		root.left = deleteNode(root.left, targetValue)
 	} else if targetValue > root.value {
 		root.right = deleteNode(root.right, targetValue)
 	} else {
-		// found the node now del it
+		// Found the node to delete
 
-		// case 1: Node has no child
+		// Case 1: Node has no child
 		if root.left == nil && root.right == nil {
-			return nil // remove the node
+			return nil // Remove the node
 		}
 
 		// Case 2: Node has only one child
 		if root.left == nil {
-			return root.right // replace with right child
+			return root.right // Replace with right child
 		}
 		if root.right == nil {
 			return root.left
 		}
+
 		// Case 3: Node has two children
 		// Find the smallest value in the right subtree (inorder successor)
 		smallestNode := findMinValue(root.right)
@@ -74,34 +83,13 @@ func deleteNode(root *TreeNode, targetValue int) *TreeNode {
 	return root
 }
 
-/*
-Step-by-Step Process
-Find the inorder successor
-
-The inorder successor is the smallest value in the right subtree of the node to be deleted.
-It is the leftmost node in the right subtree.
-Replace the value of the node to be deleted
-
-Instead of deleting the node directly, copy the value of the inorder successor into the current node.
-Delete the inorder successor node
-
-Since the inorder successor node is the smallest node in the right subtree, it cannot have a left child.
-We delete it from the tree.
-*/
-
-// Find the node with the smallest value (Helper function for deletion)
+// Find the node with the smallest value in a subtree
 func findMinValue(root *TreeNode) *TreeNode {
 	if root.left == nil {
 		return root // The leftmost node is the smallest
 	}
 	return findMinValue(root.left) // Keep going left
 }
-
-/*
-We go left because the smallest value is always in the leftmost node of a Binary Search Tree.
-✅ Left child always has smaller values
-✅ Going right would lead to larger values
-*/
 
 // Preorder Traversal (Root -> Left -> Right)
 func preorderTraversal(root *TreeNode) {
@@ -130,7 +118,7 @@ func postorderTraversal(root *TreeNode) {
 	}
 }
 
-// Compute the height of the Binary Search Tree (Recursive)
+// Compute the height of the Binary Search Tree
 func calculateTreeHeight(root *TreeNode) int {
 	if root == nil {
 		return 0 // If tree is empty, height is 0
@@ -138,6 +126,66 @@ func calculateTreeHeight(root *TreeNode) int {
 	leftSubtreeHeight := calculateTreeHeight(root.left)
 	rightSubtreeHeight := calculateTreeHeight(root.right)
 	return 1 + max(leftSubtreeHeight, rightSubtreeHeight) // Max depth of left/right subtrees
+}
+
+// Reverse (Mirror) a Binary Tree
+func reverseTree(root *TreeNode) *TreeNode {
+	if root == nil {
+		return nil
+	}
+
+	// Swap left and right subtrees
+	root.left, root.right = root.right, root.left
+
+	// Recursively reverse left and right subtrees
+	reverseTree(root.left)
+	reverseTree(root.right)
+
+	return root
+}
+
+// Compute the Diameter of the Binary Tree
+func findDiameter(root *TreeNode) (int, []int) {
+	if root == nil {
+		return 0, []int{} // Height is 0, path is empty
+	}
+
+	// Get height & path of left and right subtrees
+	leftHeight, leftPath := findDiameter(root.left)
+	rightHeight, rightPath := findDiameter(root.right)
+
+	// Path that goes through the root
+	currentPath := append(leftPath, root.value)
+	currentPath = append(currentPath, rightPath...)
+
+	// Determine the longest path
+	if leftHeight > rightHeight {
+		return leftHeight + 1, append(leftPath, root.value)
+	} else {
+		return rightHeight + 1, append(rightPath, root.value)
+	}
+}
+
+// Compute the Actual Diameter and Track the Path
+func getDiameter(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+
+	leftHeight, leftPath := findDiameter(root.left)
+	rightHeight, rightPath := findDiameter(root.right)
+
+	// Path that goes through the root
+	currentPath := append(leftPath, root.value)
+	currentPath = append(currentPath, rightPath...)
+
+	// Update global diameter path if the new one is longer
+	if len(currentPath) > len(diameterPath) {
+		diameterPath = currentPath
+	}
+
+	// Return the maximum diameter found
+	return max(leftHeight+rightHeight, max(getDiameter(root.left), getDiameter(root.right)))
 }
 
 // Helper function to find the maximum of two numbers
@@ -151,7 +199,7 @@ func max(a, b int) int {
 func main() {
 	var treeRoot *TreeNode
 
-	// Insert elements
+	// Insert elements into the Binary Search Tree
 	treeRoot = insertNode(treeRoot, 5)
 	treeRoot = insertNode(treeRoot, 3)
 	treeRoot = insertNode(treeRoot, 7)
@@ -178,4 +226,14 @@ func main() {
 	fmt.Println("\nInorder Traversal After Deletion:")
 	inorderTraversal(treeRoot) // Output: 2 3 4 5 6 8
 	fmt.Println()
+
+	// Reverse (Mirror) the Binary Tree
+	treeRoot = reverseTree(treeRoot)
+	fmt.Println("\nInorder Traversal After Reversing Tree:")
+	inorderTraversal(treeRoot) // The tree should now be mirrored
+	fmt.Println()
+
+	// Compute Diameter and Display Path
+	fmt.Println("\nDiameter of Tree:", getDiameter(treeRoot))
+	fmt.Println("Diameter Path:", diameterPath)
 }
