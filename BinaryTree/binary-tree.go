@@ -130,6 +130,24 @@ func postorderTraversal(root *TreeNode) {
 	}
 }
 
+// Compute the height of the Binary Search Tree (Recursive)
+func calculateTreeHeight(root *TreeNode) int {
+	if root == nil {
+		return 0 // If tree is empty, height is 0
+	}
+	leftSubtreeHeight := calculateTreeHeight(root.left)
+	rightSubtreeHeight := calculateTreeHeight(root.right)
+	return 1 + max(leftSubtreeHeight, rightSubtreeHeight) // Max depth of left/right subtrees
+}
+
+// Helper function to find the maximum of two numbers
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
 func main() {
 	var treeRoot *TreeNode
 
