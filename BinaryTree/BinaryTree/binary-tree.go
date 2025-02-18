@@ -1,11 +1,11 @@
 package main
 
-type Node struct {
+type TreeNode struct {
 	value int
-	Left  *Node
-	Right *Node
+	Left  *TreeNode
+	Right *TreeNode
 }
 
 func main() {
-	
+
 }
