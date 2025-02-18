@@ -199,7 +199,6 @@ func max(a, b int) int {
 func main() {
 	var treeRoot *TreeNode
 
-	// Insert elements into the Binary Search Tree
 	treeRoot = insertNode(treeRoot, 5)
 	treeRoot = insertNode(treeRoot, 3)
 	treeRoot = insertNode(treeRoot, 7)
@@ -209,22 +208,22 @@ func main() {
 	treeRoot = insertNode(treeRoot, 8)
 
 	fmt.Println("Preorder Traversal:")
-	preorderTraversal(treeRoot) // Output: 5 3 2 4 7 6 8
+	preorderTraversal(treeRoot)
 	fmt.Println("\nInorder Traversal:")
-	inorderTraversal(treeRoot) // Output: 2 3 4 5 6 7 8
+	inorderTraversal(treeRoot)
 	fmt.Println("\nPostorder Traversal:")
-	postorderTraversal(treeRoot) // Output: 2 4 3 6 8 7 5
+	postorderTraversal(treeRoot)
 
-	fmt.Println("\nHeight of Tree:", calculateTreeHeight(treeRoot)) // Output: 3
+	fmt.Println("\nHeight of Tree:", calculateTreeHeight(treeRoot))
 
 	// Search
-	fmt.Println("\nSearch for 4:", searchNode(treeRoot, 4)) // Output: true
-	fmt.Println("Search for 10:", searchNode(treeRoot, 10)) // Output: false
+	fmt.Println("\nSearch for 4:", searchNode(treeRoot, 4))
+	fmt.Println("Search for 10:", searchNode(treeRoot, 10))
 
 	// Delete node
 	treeRoot = deleteNode(treeRoot, 7)
 	fmt.Println("\nInorder Traversal After Deletion:")
-	inorderTraversal(treeRoot) // Output: 2 3 4 5 6 8
+	inorderTraversal(treeRoot)
 	fmt.Println()
 
 	// Reverse (Mirror) the Binary Tree
