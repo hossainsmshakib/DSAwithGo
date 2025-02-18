@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type TreeNode struct {
 	value int
 	left  *TreeNode
@@ -100,6 +102,33 @@ We go left because the smallest value is always in the leftmost node of a Binary
 ✅ Left child always has smaller values
 ✅ Going right would lead to larger values
 */
+
+// Preorder Traversal (Root -> Left -> Right)
+func preorderTraversal(root *TreeNode) {
+	if root != nil {
+		fmt.Print(root.value, " ")
+		preorderTraversal(root.left)
+		preorderTraversal(root.right)
+	}
+}
+
+// Inorder Traversal (Left -> Root -> Right)
+func inorderTraversal(root *TreeNode) {
+	if root != nil {
+		inorderTraversal(root.left)
+		fmt.Print(root.value, " ")
+		inorderTraversal(root.right)
+	}
+}
+
+// Postorder Traversal (Left -> Right -> Root)
+func postorderTraversal(root *TreeNode) {
+	if root != nil {
+		postorderTraversal(root.left)
+		postorderTraversal(root.right)
+		fmt.Print(root.value, " ")
+	}
+}
 
 func main() {
 	var treeRoot *TreeNode
