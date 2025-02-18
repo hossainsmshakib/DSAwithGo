@@ -21,6 +21,22 @@ func insertNode(root *TreeNode, newValue int) *TreeNode {
 	return root
 }
 
+func searchNode(root *TreeNode, targetValue int) bool {
+	if root == nil {
+		return false
+	}
+
+	if root.value == targetValue {
+		return true
+	}
+
+	if targetValue < root.value {
+		return searchNode(root.left, targetValue)
+	} else {
+		return searchNode(root.right, targetValue)
+	}
+}
+
 func main() {
 	var treeRoot *TreeNode
 
